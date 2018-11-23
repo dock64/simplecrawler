@@ -188,6 +188,12 @@ module.exports = {
         });
     },
 
+    "/compressed/deflate-raw": function(write) {
+        zlib.deflateRaw("Yay, you know how to deal with deflate compression!", function(error, result) {
+            write(200, result, { "Content-Encoding": "deflate" });
+        });
+    },
+
     "/big": function(write) {
         write(200, new Buffer(1024 * 1024 * 17));
     }

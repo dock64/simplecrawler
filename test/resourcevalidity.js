@@ -305,6 +305,16 @@ describe("Resource validity checker", function() {
         crawler.start();
     });
 
+    it("should decompress raw deflated responses by default", function(done) {
+        var crawler = makeCrawler("http://127.0.0.1:3000/compressed/deflate-raw");
+
+        crawler.on("fetchcomplete", function(queueItem, responseBody) {
+            responseBody.toString().should.equal("Yay, you know how to deal with deflate compression!");
+            done();
+        });
+        crawler.start();
+    });
+
     it("should be able to not decompress responses (but still find inline resources)", function(done) {
         var crawler = makeCrawler("http://127.0.0.1:3000/compressed/link"),
             fetchedPagesCount = 0;
